@@ -495,6 +495,9 @@ public class BulkUpload0 {
 			if (status1 == 1) {
 				//Log.log(Log.ERROR, "ClaimAction","getClaimSettlePaymentReportData()","SP returns a 1. Error code is :" + errorCode);
 				callableStmt1.close();
+						//code changed for uploading file which is exceeding there Balance Exposure Limit by shital on 13 Apr 2022
+				con.rollback();
+				throw new CustomExceptionHandler(errorCode1);
 				//throw new DatabaseException(errorCode);
 
 			} else if (status1 == 0) {
@@ -503,6 +506,8 @@ public class BulkUpload0 {
 			callableStmt1.close();
 			callableStmt1 = null;			
 		} catch (SQLException sqlexception) {
+				//code changed for uploading file which is exceeding there Balance Exposure Limit by shital on 13 Apr 2022
+			throw new CustomExceptionHandler(sqlexception.getMessage());
 			//Log.log(Log.ERROR, "ClaimAction","getClaimSettlePaymentSavedMLIWiseCK2Data()","Error retrieving all Claim settled Payment Process Data!");
 			//throw new DatabaseException(sqlexception.getMessage());
 		} finally {
@@ -1065,9 +1070,18 @@ public class BulkUpload0 {
 			// e.printStackTrace();
 			// throw new MessageException("Unable to Read Excel File.");
 		} catch (Exception e) {
+				//code changed for uploading file which is exceeding there Balance Exposure Limit by shital on 13 Apr 2022
+			try {
+				con.rollback();
+			} catch (SQLException ignore) {
+				ignore.printStackTrace();
+				throw new CustomExceptionHandler(ignore.getMessage());
+			}
 
-			e.printStackTrace();
-			Date d = new Date();
+			throw new CustomExceptionHandler(e.getMessage());
+			/*
+			 * e.printStackTrace(); Date d = new Date();
+			 */
 		} finally {
 			if (is != null) {
 				is.close();
@@ -1075,8 +1089,8 @@ public class BulkUpload0 {
 			if (Stat != null) {
 				Stat.close();
 			}
-			return UploadedStatus;
-		}
+			
+		}return UploadedStatus;
 	}
 	
 	

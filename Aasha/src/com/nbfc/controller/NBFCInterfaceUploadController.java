@@ -3,6 +3,7 @@ package com.nbfc.controller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -315,8 +316,8 @@ public class NBFCInterfaceUploadController {
 		headerMap = BlUpObj.getTableHeaderData(conn,TableName,BulkName);
 		Map<String, ArrayList<String>> UploadedStatus = new HashMap<String, ArrayList<String>>();
 		UploadedStatus=BlUpObj.CheckExcelData(excelFile.getFile(),headerMap,TableName,conn,user,BulkName);
-		
-		if(UploadedStatus!=null){	
+		//code changed for uploading file which is exceeding there Balance Exposure Limit by shital on 13 Apr 2022
+		if(UploadedStatus!=null || !(UploadedStatus.isEmpty())){	
 			
 			ArrayList SuccessDataList=(ArrayList)UploadedStatus.get("successRecord");
 			ArrayList UnSuccessDataList=(ArrayList)UploadedStatus.get("unsuccessRecord");
@@ -346,8 +347,10 @@ public class NBFCInterfaceUploadController {
 		model.put("GMaintainlist", userActivityService.getActivity("NBFCMAKER", "Guarantee_Maintenance"));// 25june19
 		model.put("homePage", "nbfcMakerHome");
 		} catch (Exception e) {
+				//code changed for uploading file which is exceeding there Balance Exposure Limit by shital on 13 Apr 2022
+			throw new CustomExceptionHandler(e.getMessage());
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		} 
 		
 		return new ModelAndView("batchUploadScreen", model);
@@ -380,8 +383,8 @@ public class NBFCInterfaceUploadController {
 		headerMap = BlUpObj.getTableHeaderDataCleanUp(conn,TableName,BulkName);
 		Map<String, ArrayList<String>> UploadedStatus = new HashMap<String, ArrayList<String>>();
 		UploadedStatus=BlUpObj.CheckExcelDataCleanUp(excelFile.getFile1(),headerMap,TableName,conn,user,BulkName);
-		
-		if(UploadedStatus!=null){	
+		//code changed for uploading file which is exceeding there Balance Exposure Limit by shital on 13 Apr 2022		
+		if(UploadedStatus!=null || !(UploadedStatus.isEmpty())){	
 			
 			ArrayList SuccessDataList=(ArrayList)UploadedStatus.get("successRecord");
 			ArrayList UnSuccessDataList=(ArrayList)UploadedStatus.get("unsuccessRecord");
@@ -412,7 +415,8 @@ public class NBFCInterfaceUploadController {
 		model.put("homePage", "nbfcMakerHome");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CustomExceptionHandler(e.getMessage());
+//			e.printStackTrace();
 		} 
 		
 		return new ModelAndView("batchUploadScreen", model);

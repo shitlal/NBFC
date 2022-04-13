@@ -885,17 +885,17 @@
 	</definition>
 		<!-- ASF ADDED BY SAYALI -->
 		<definition name="ASFBulkUploadDetails" extends="base.definition">
-		<put-attribute name="title" value="NPA Detail"></put-attribute>
+		<put-attribute name="title" value="ASF Detail"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/nbfcHeaderPage.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/ASFBulkUploadDetails.jsp"></put-attribute>
 	</definition>
 		<definition name="ASFBulkUploadSuccess" extends="base.definition">
-		<put-attribute name="title" value="NPA Detail"></put-attribute>
+		<put-attribute name="title" value="ASF Detail"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/nbfcHeaderPage.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/ASFBulkUploadSucces.jsp"></put-attribute>
 	</definition>
 		<definition name="ASFBulkUploadCheckerDetails" extends="base.definition">
-		<put-attribute name="title" value="NPA Detail"></put-attribute>
+		<put-attribute name="title" value="ASF Detail"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/nbfcHeaderPage.jsp"></put-attribute>
 		<put-attribute name="body" value="/WEB-INF/views/ASFBulkUploadCheckerDetails.jsp"></put-attribute>
 	</definition>

@@ -611,7 +611,7 @@ public class NBFCInvoiceDaoImpl implements NBFCInvoiceDao {
 		map1.put("TotalIgstAmt", IGST_AMT1);
 		map1.put("TotalCgstAmt", CGST_AMT1);
 		map1.put("TotalSgstAmt", SGST_AMT1);
-		map1.put("TaxInvoiceNo", ProformaInvoiceNo);
+//		map1.put("TaxInvoiceNo", ProformaInvoiceNo);
 		map1.put("TaxAmount", taxAmountInRupes2);// taxAmt tTax
 		map1.put("finalAmt", fianlTotalAmountInRupes2);// totalAmt tAmt
 		// map1.put("finalAmt", fianlTotalAmountInRupes1);// totalAmt tAmt
@@ -648,8 +648,17 @@ public class NBFCInvoiceDaoImpl implements NBFCInvoiceDao {
 			bean11.setAddress((String)obj1[15]);
 			bean11.setStateCode((String)obj1[24]);
 		}
-		
-	
+		String taxDate = bean11.getTaxDate();
+		String[] formatedDategf = taxDate.split("/");
+		String finalDategf = formatedDategf[0] + formatedDategf[1] + formatedDategf[2];
+		/*
+		 * try { System.out.println(mdyFormat1.parse(mdy1)); } catch (ParseException e1)
+		 * { e1.printStackTrace(); }
+		 */
+
+		String ProformaInvoiceNogf = finalDategf + "0000" + ProformaNo;
+		map1.put("TaxInvoiceNo", ProformaInvoiceNogf);
+		System.out.println("ProformaInvoiceNogf=== "+ ProformaInvoiceNogf);
 		
 		String contextPath_dkr = request.getSession(false).getServletContext().getRealPath("");	
 		String contextPath = PropertyLoader.changeToOSpath(contextPath_dkr);
@@ -687,9 +696,9 @@ public class NBFCInvoiceDaoImpl implements NBFCInvoiceDao {
 			centerAlignedParagraph3.setAlignment(Element.ALIGN_CENTER);
 			Paragraph centerAlignedParagraph4 = new Paragraph("GSTN:27AAATC2613D1ZC STATE:Maharastra-MH", drfont8);
 			centerAlignedParagraph4.setAlignment(Element.ALIGN_CENTER);
-			Paragraph centerAlignedParagraph5 = new Paragraph("SIDBI Swavalamban Bhavan, 7th Floor, C-11,G-Block,Bandra Kurla Compledx,Bandra(East), Mumbai 400 051"	+ new Chunk("www.cgtmse.in").setUnderline(0.1f, -2f),	drfont6);
+			Paragraph centerAlignedParagraph5 = new Paragraph("SIDBI Swavalamban Bhavan, 1st Floor, C-11,G-Block,Bandra Kurla Compledx,Bandra(East), Mumbai 400 051"	+ new Chunk("www.cgtmse.in").setUnderline(0.1f, -2f),	drfont6);
 			centerAlignedParagraph5.setAlignment(Element.ALIGN_CENTER);			
-			Paragraph centerAlignedParagraph6 = new Paragraph("Proforma Invoice No:" + ProformaInvoiceNo+""
+			Paragraph centerAlignedParagraph6 = new Paragraph("Proforma Invoice No:" + ProformaInvoiceNogf+""
 					+ "\t\t\t\t\t     \t   \t                        "
 					+ "               "
 					+ ""
@@ -917,7 +926,7 @@ public class NBFCInvoiceDaoImpl implements NBFCInvoiceDao {
 			//String totAmountInWords = NumberToWordsFormatMethod.inWordFormat(sim2); // Total
 			// Amount(Rs.)
 			// System.out.println("````````````````````9``````````````````````````````````");
-			Paragraph totalPayAmt = new Paragraph(" Total Amount Paid RS. In Words:" + sim2, drfont7d);
+			Paragraph totalPayAmt = new Paragraph(" Total Amount Payable RS. In Words:" + sim2, drfont7d);
 			totalPayAmt.setAlignment(Element.ALIGN_LEFT);
 			document.add(totalPayAmt);
 			document.add(new Paragraph("\n\n"));
